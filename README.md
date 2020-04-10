@@ -29,6 +29,8 @@ When Maven completes, navigate into the 'target' directory and launch the app: j
 Once the application is running, you can use an HTTP client and perform the following call:
 GET http://localhost:8080/report
 
+When running, see also the documentation: http://localhost:8080/swagger-ui.html#!/tracker-controller/getReportUsingGET
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
