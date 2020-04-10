@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.mikescarborough.demos.RewardsTracker.model.CustomerRewards;
+
+import com.mikescarborough.demos.RewardsTracker.model.CustomerCollation;
+import com.mikescarborough.demos.RewardsTracker.model.CustomerMonthRewards;
 import com.mikescarborough.demos.RewardsTracker.model.RewardsReport;
 import com.mikescarborough.demos.RewardsTracker.model.TransactionSummary;
 import com.mikescarborough.demos.RewardsTracker.repo.TransactSummRepo;
@@ -17,7 +19,6 @@ import com.mikescarborough.demos.RewardsTracker.service.ITransactSummService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 
 /**
@@ -44,11 +45,11 @@ public class TransactSummService implements ITransactSummService {
 	protected RewardsReport getPrior3CalMonthReport(Date reportDate) {
 		int NUM_MONTHS = 3;
 		List<TransactionSummary> transactList, userTransactList;
-		List<CustomerRewards> custPoints = new ArrayList<CustomerRewards>();
+		List<CustomerMonthRewards> custPoints = new ArrayList<CustomerMonthRewards>();
 		RewardsReport report;
 
 		Date beginDate = getFirstDayOfPrecedingMonth(reportDate, NUM_MONTHS);
-		Date endDate = getFirstDayOfPrecedingMonth(reportDate, 0);
+		Date endDate = getFirstDayOfPrecedingMonth(reportDate, 2);
 
 		System.out.println("Begin: " + beginDate.toString() + "  End: " + endDate.toString() + "  Report: " + reportDate.toString());
 
@@ -61,11 +62,14 @@ public class TransactSummService implements ITransactSummService {
 			userTransactList = userSummaries.get(currCust);
 			int rewardPoints = Math.round(rewardsCalc.calculateUserRewardPoints(userTransactList));
 
-			CustomerRewards thisRewards = new CustomerRewards(currCust.intValue(), (float) rewardPoints);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(beginDate);
+			CustomerMonthRewards thisRewards = new CustomerMonthRewards(currCust.intValue(), (float) rewardPoints, calendar.get(Calendar.MONTH),  calendar.get(Calendar.YEAR));
 			custPoints.add(thisRewards);
 			System.out.println("User #" + currCust + "  Rewards = " + rewardPoints);
 		}
-		report = new RewardsReport(custPoints, beginDate, endDate);
+		CustomerCollation custMultiMonths = new CustomerCollation(custPoints);
+		report = new RewardsReport(custMultiMonths, beginDate, endDate);
 
 		return report;
 	}
@@ -111,7 +115,6 @@ public class TransactSummService implements ITransactSummService {
 			}
 			userList = userSumm.get(custId);
 			userList.add(transact);
-//s			userSumm.put(custId, userList);
 			System.out.println("Cust #" + transact.getCustId() + "  transact: " + transact.getId() + "  Tot=" + transact.getOverallTotal());
 		}
 

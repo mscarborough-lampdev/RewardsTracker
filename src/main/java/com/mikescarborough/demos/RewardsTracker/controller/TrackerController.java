@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import com.mikescarborough.demos.RewardsTracker.model.CustomerRewards;
 import com.mikescarborough.demos.RewardsTracker.service.impl.TransactSummService;
 import com.mikescarborough.demos.RewardsTracker.model.RewardsReport;
 

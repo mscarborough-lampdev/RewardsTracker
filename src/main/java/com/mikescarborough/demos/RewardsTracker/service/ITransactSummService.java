@@ -3,7 +3,6 @@ package com.mikescarborough.demos.RewardsTracker.service;
 import java.util.Date;
 import java.util.List;
 
-import com.mikescarborough.demos.RewardsTracker.model.CustomerRewards;
 import com.mikescarborough.demos.RewardsTracker.model.TransactionSummary;
 import com.mikescarborough.demos.RewardsTracker.model.RewardsReport;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.mikescarborough.demos.RewardsTracker.model.CustomerRewards;
+import com.mikescarborough.demos.RewardsTracker.model.CustomerCollation;
 
 /**
  * A class encapsulating Reward Point report
@@ -15,18 +15,18 @@ import com.mikescarborough.demos.RewardsTracker.model.CustomerRewards;
  * @since 2020-04-07
  */
 public class RewardsReport implements java.io.Serializable {
-    private List<CustomerRewards> rewardsList = new ArrayList<CustomerRewards>();
+    private List<CustomerCollation> rewardsList = new ArrayList<CustomerCollation>();
     private Date beginDate = new Date();
     private Date endDate = new Date();
 
-    public RewardsReport(List<CustomerRewards> userRewards, Date start, Date end) {
+    public RewardsReport(List<CustomerCollation> userRewards, Date start, Date end) {
         rewardsList = userRewards;
         beginDate = start;
         endDate = end;
     }
 
 
-    public List<CustomerRewards> getRewardsList() {
+    public List<CustomerCollation> getRewardsList() {
         return rewardsList;
     }
 

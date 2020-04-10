@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 /**
- * A class handling data retrieval for 
+ * A interface that helps setup data retrieval for 
  * Transaction Summary info
  *
  * @author  Mike Scarborough
