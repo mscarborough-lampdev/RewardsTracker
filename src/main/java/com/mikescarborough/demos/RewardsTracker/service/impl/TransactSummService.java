@@ -46,31 +46,33 @@ public class TransactSummService implements ITransactSummService {
 		int NUM_MONTHS = 3;
 		List<TransactionSummary> transactList, userTransactList;
 		List<CustomerMonthRewards> custPoints = new ArrayList<CustomerMonthRewards>();
-		RewardsReport report;
 
-		Date beginDate = getFirstDayOfPrecedingMonth(reportDate, NUM_MONTHS);
-		Date endDate = getFirstDayOfPrecedingMonth(reportDate, 2);
+		Date reportStart = getFirstDayOfPrecedingMonth(reportDate, NUM_MONTHS);
+		Date reportEnd = getFirstDayOfPrecedingMonth(reportDate, NUM_MONTHS-1);
+		RewardsReport report = new RewardsReport(reportStart, reportEnd);
 
-		System.out.println("Begin: " + beginDate.toString() + "  End: " + endDate.toString() + "  Report: " + reportDate.toString());
+		for (int processMonth = NUM_MONTHS; processMonth > 0; processMonth--) {
+			Date beginDate = getFirstDayOfPrecedingMonth(reportDate, processMonth);
+			Date endDate = getFirstDayOfPrecedingMonth(reportDate, processMonth-1);
 
-		transactList = getAllTransactSummBetweenTimes(beginDate, endDate);
+			System.out.println("Begin: " + beginDate.toString() + "  End: " + endDate.toString() + "  Report: " + reportDate.toString());
 
-		Map<Integer, List<TransactionSummary>> userSummaries = separateTransactionSummariesByUser(transactList);
+			transactList = getAllTransactSummBetweenTimes(beginDate, endDate);
 
-		Set<Integer> userList = userSummaries.keySet();
-		for (Integer currCust : userList) {
-			userTransactList = userSummaries.get(currCust);
-			int rewardPoints = Math.round(rewardsCalc.calculateUserRewardPoints(userTransactList));
+			Map<Integer, List<TransactionSummary>> userSummaries = separateTransactionSummariesByUser(transactList);
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(beginDate);
-			CustomerMonthRewards thisRewards = new CustomerMonthRewards(currCust.intValue(), (float) rewardPoints, calendar.get(Calendar.MONTH),  calendar.get(Calendar.YEAR));
-			custPoints.add(thisRewards);
-			System.out.println("User #" + currCust + "  Rewards = " + rewardPoints);
+			Set<Integer> userList = userSummaries.keySet();
+			for (Integer currCust : userList) {
+				userTransactList = userSummaries.get(currCust);
+				int rewardPoints = Math.round(rewardsCalc.calculateUserRewardPoints(userTransactList));
+
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(beginDate);
+				CustomerMonthRewards thisRewards = new CustomerMonthRewards(currCust.intValue(), (float) rewardPoints, calendar.get(Calendar.MONTH),  calendar.get(Calendar.YEAR));
+				report.addCustomerMonthRewards(thisRewards);
+				System.out.println("User #" + currCust + "  Rewards = " + rewardPoints);
+			}
 		}
-		CustomerCollation custMultiMonths = new CustomerCollation(custPoints);
-		report = new RewardsReport(custMultiMonths, beginDate, endDate);
-
 		return report;
 	}
 

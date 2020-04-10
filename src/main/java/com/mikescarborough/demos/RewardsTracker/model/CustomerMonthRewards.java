@@ -30,11 +30,11 @@ public class CustomerMonthRewards implements java.io.Serializable {
         return rewardPoints;
     }
 
-    public float getMonthNum() {
+    public int getMonthNum() {
         return monthNum;
     }
 
-    public float getYear() {
+    public int getYear() {
         return year;
     }
 
