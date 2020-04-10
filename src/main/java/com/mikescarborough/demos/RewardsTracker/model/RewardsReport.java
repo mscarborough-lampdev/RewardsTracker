@@ -13,13 +13,13 @@ import java.util.Map;
  * @since 2020-04-07
  */
 public class RewardsReport implements java.io.Serializable {
+    private Date reportBeginDate = new Date();
+    private Date reportEndDate = new Date();
     private Map<Integer, CustomerCollation> collatedRewards = new HashMap<Integer, CustomerCollation>();
-    private Date beginDate = new Date();
-    private Date endDate = new Date();
 
     public RewardsReport(Date start, Date end) {
-        beginDate = start;
-        endDate = end;
+        reportBeginDate = start;
+        reportEndDate = end;
     }
 
 
@@ -39,11 +39,11 @@ public class RewardsReport implements java.io.Serializable {
     }
 
     public Date getBeginDate() {
-            return beginDate;
+        return reportBeginDate;
     }
 
     public Date getEndDate() {
-        return endDate;
+        return reportEndDate;
     }
 
 }
