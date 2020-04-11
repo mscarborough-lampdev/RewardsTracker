@@ -35,7 +35,12 @@ public class TransactSummService implements ITransactSummService {
 	@Autowired
 	private TransactSummRepo transactRepo;
 
-	private IRewardsCalculator rewardsCalc = new RewardsCalculatorV0001();
+	private IRewardsCalculator rewardsCalc;
+
+    @Autowired
+    public void setRewardsCalculator(IRewardsCalculator calculator) {
+        this.rewardsCalc = calculator;
+    }
 
 	@Override
 	public RewardsReport getStandardReport(Date reportDate) {
