@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import com.mikescarborough.demos.RewardsTracker.service.impl.TransactSummService;
+import com.mikescarborough.demos.RewardsTracker.service.ITransactSummService;
 import com.mikescarborough.demos.RewardsTracker.model.RewardsReport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrackerController {
 
 	@Autowired
-	private TransactSummService transactSrvc;
+	private ITransactSummService transactSrvc;
 
 	@RequestMapping(path = "/",  method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity index() {
